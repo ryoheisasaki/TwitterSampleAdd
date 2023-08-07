@@ -7,12 +7,14 @@
 
 import Foundation
 
-class Station : NSObject {
+class TweetCell : NSObject {
+    //ここで"ヤマタク"を格納
     var name: String
-    var prefecture: String
+    //ここで"本文1"などを格納
+    var mainText: String
     
-    init(name: String, prefecture: String){
-        self.name = name as String
-        self.prefecture = prefecture as String
+    init(name: String, mainText: String){
+        self.name = name
+        self.mainText = mainText
     }
 }
