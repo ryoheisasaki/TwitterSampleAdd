@@ -103,7 +103,7 @@
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="plain" title="キャンセル"/>
                                 <connections>
-                                    <action selector="cancelAddButtan:" destination="lfJ-eK-zxQ" eventType="touchUpInside" id="DTu-hE-M7W"/>
+                                    <action selector="cancelActionButton:" destination="lfJ-eK-zxQ" eventType="touchUpInside" id="Jhn-aL-dFa"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -127,6 +127,7 @@
                     </view>
                     <navigationItem key="navigationItem" id="rma-3m-sd6"/>
                     <connections>
+                        <outlet property="cancelButton" destination="ONw-ZW-Y20" id="Fd1-18-O8Z"/>
                         <outlet property="mainTextView" destination="NxA-IG-hxJ" id="O45-tv-wDH"/>
                         <outlet property="nameTextField" destination="XoZ-SB-I3o" id="w64-ML-HWU"/>
                         <outlet property="postOutletAddButton" destination="rlK-Ug-0xg" id="Z9y-Qe-721"/>
