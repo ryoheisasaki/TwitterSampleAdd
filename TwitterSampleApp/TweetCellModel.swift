@@ -6,12 +6,16 @@
 //
 
 import Foundation
+import RealmSwift
 
-struct TweetCellModel {
+class TweetCellModel: Object {
+    
+    @objc dynamic var id: String = UUID().uuidString
 
     // このTweetの主
-       var name: String
+    @objc dynamic var name: String = ""
     
     // Tweetの本文
-       var mainText: String
+    @objc dynamic var mainText: String = ""
+
 }

@@ -7,6 +7,8 @@
 
 import Foundation
 import UIKit
+import RealmSwift
+
 
 class HomeViewController: UIViewController {
     
@@ -22,6 +24,8 @@ class HomeViewController: UIViewController {
         super.viewDidLoad()
         configureButton()
         setTweetData()
+        let tweetView = TwitterViewController()
+        
         
         tableView.dataSource = self
         tableView.tableFooterView = UIView()
@@ -31,18 +35,26 @@ class HomeViewController: UIViewController {
         
         //投稿ボタンを円形にする
         func configureButton() {
-                addButton.layer.cornerRadius = addButton.bounds.width / 2
-            }
+            addButton.layer.cornerRadius = addButton.bounds.width / 2
+        }
+        
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        setTweetData()
         
     }
     
     func setTweetData() {
-        for i in 1...6 {
-            let tweetData = TweetCellModel(name: "ヤマタク", mainText: "本文\(i)")
-            tweetDataList.append(tweetData)
-        }
+        let realm = try! Realm()
+        let result = realm.objects(TweetCellModel.self)
+        tweetDataList = Array(result)
+        
+        //テーブルビュー更新
+        tableView.reloadData()
+        
     }
-    
     
     
 }
@@ -51,21 +63,21 @@ extension HomeViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return tweetDataList.count
     }
-
+    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "TableViewCell", for: indexPath) as! TableViewCell
-            let tweetData = tweetDataList[indexPath.row]
+        let tweetData = tweetDataList[indexPath.row]
         cell.setCell(tweetCell: tweetData)
-            return cell
+        return cell
     }
 }
 
 extension HomeViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-            tableView.estimatedRowHeight = 100
-            return UITableView.automaticDimension
+        tableView.estimatedRowHeight = 100
+        return UITableView.automaticDimension
     }
-    }
+}
 
 extension String {
     // 文字列の高さを計算するための拡張メソッド
@@ -77,4 +89,7 @@ extension String {
                                             context: nil)
         return ceil(boundingBox.height)
     }
+    
 }
+
+
