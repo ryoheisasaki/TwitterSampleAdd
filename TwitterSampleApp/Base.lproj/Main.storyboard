@@ -31,7 +31,7 @@
                                 <connections>
                                     <action selector="addButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="ibQ-by-LOD"/>
                                     <action selector="addButton:" destination="8yA-qS-A32" eventType="touchUpInside" id="itS-tN-P0N"/>
-                                    <segue destination="lfJ-eK-zxQ" kind="show" id="Qc7-uF-Vdz"/>
+                                    <segue destination="lfJ-eK-zxQ" kind="show" identifier="toNext" id="Qc7-uF-Vdz"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -61,7 +61,7 @@
         <!--Twitter View Controller-->
         <scene sceneID="o42-5r-kwd">
             <objects>
-                <viewController id="lfJ-eK-zxQ" customClass="TwitterViewController" customModule="TwitterSampleApp" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="twitterViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="lfJ-eK-zxQ" customClass="TwitterViewController" customModule="TwitterSampleApp" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8hh-56-Gth">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="783"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
