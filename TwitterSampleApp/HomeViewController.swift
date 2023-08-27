@@ -12,38 +12,41 @@ import RealmSwift
 
 class HomeViewController: UIViewController {
     
+    var tweetDataList: [TweetCellModel] = []
     
     @IBOutlet weak var addButton: UIButton!
     @IBOutlet weak var tableView: UITableView!
     @IBAction func addButton(_ sender: UIButton) {}
     
-    var tweetDataList: [TweetCellModel] = []
-    
-    //ライフメソッド　起動時に実行される　viewDidLoad ロードされる
+    // Viewが生成された最初の一回だけ走るライフサイクルメソッド
     override func viewDidLoad() {
         super.viewDidLoad()
         configureButton()
         setTweetData()
-        let tweetView = TwitterViewController()
-        
-        
         tableView.dataSource = self
         tableView.tableFooterView = UIView()
         tableView.delegate = self
         let cellNib = UINib(nibName: "TableViewCell", bundle: nil)
         tableView.register(cellNib, forCellReuseIdentifier: "TableViewCell")
-        
-        //投稿ボタンを円形にする
-        func configureButton() {
-            addButton.layer.cornerRadius = addButton.bounds.width / 2
-        }
-        
     }
     
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
+    // viewが表示される前に走るライフサイクルメソッド
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         setTweetData()
-        
+    }
+    
+    // TwitterViewControllerのdelegateプロパティに自身を代入
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "toNext" {
+            let nextView = segue.destination as! TwitterViewController
+            nextView.delegate = self
+        }
+    }
+    
+    //投稿ボタンを円形にする
+    func configureButton() {
+        addButton.layer.cornerRadius = addButton.bounds.width / 2
     }
     
     func setTweetData() {
@@ -55,8 +58,6 @@ class HomeViewController: UIViewController {
         tableView.reloadData()
         
     }
-    
-    
 }
 
 extension HomeViewController: UITableViewDataSource {
@@ -83,13 +84,19 @@ extension String {
     // 文字列の高さを計算するための拡張メソッド
     func height(withConstrainedWidth width: CGFloat, font: UIFont) -> CGFloat {
         let constraintRect = CGSize(width: width, height: .greatestFiniteMagnitude)
-        let boundingBox = self.boundingRect(with: constraintRect,
-                                            options: [.usesLineFragmentOrigin, .usesFontLeading],
-                                            attributes: [NSAttributedString.Key.font: font],
-                                            context: nil)
+        let boundingBox = self.boundingRect(
+            with: constraintRect,
+            options: [.usesLineFragmentOrigin, .usesFontLeading],
+            attributes: [NSAttributedString.Key.font: font],
+            context: nil
+        )
         return ceil(boundingBox.height)
     }
-    
 }
 
-
+// delegateプロパティに自身が代入されている時使用される関数の処理を記述
+extension HomeViewController: TwitterViewControllerDelegate {
+    func didPostTweet() {
+        setTweetData()
+    }
+}

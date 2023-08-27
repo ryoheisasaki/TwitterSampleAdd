@@ -10,13 +10,11 @@ import UIKit
 import RealmSwift
 
 class TwitterViewController: UIViewController, UITextViewDelegate, UITextFieldDelegate {
-    let tweetData = TweetCellModel()
     
+    weak var delegate: TwitterViewControllerDelegate? = nil
     
     @IBOutlet weak var nameTextField: UITextField!
-    @IBOutlet weak var mainTextView:
-    UITextView!
-    
+    @IBOutlet weak var mainTextView: UITextView!
     @IBOutlet weak var cancelButton: UIButton!
     
     @IBAction func cancelActionButton(_ sender: Any) {
@@ -27,11 +25,6 @@ class TwitterViewController: UIViewController, UITextViewDelegate, UITextFieldDe
     
     //投稿ボタン
     @IBAction func postAddButton(_ sender: UIButton) {
-        
-        tweetData.name = nameTextField.text ?? ""
-        tweetData.mainText = mainTextView.text ?? ""
-        
-        
         //テキストフィールドとテキストビューの値を取得する
         let name = nameTextField.text ?? ""
         let mainText = mainTextView.text ?? ""
@@ -39,24 +32,14 @@ class TwitterViewController: UIViewController, UITextViewDelegate, UITextFieldDe
         // 値を保存する
         saveData(name: name, mainText: mainText)
         
-        // ビューコントローラーを閉じる
-        self.navigationController?.popViewController(animated: true)
+        // デリゲートメソッドを呼び出して通知を送る
+        delegate?.didPostTweet()
         
-        
-        
-    }
-    func saveData(name: String, mainText: String) {
-        let realm = try! Realm()
-        try! realm.write {
-            tweetData.name = name
-            tweetData.mainText = mainText
-            realm.add(tweetData)
-            print("😃\(tweetData)")
-        }
+        // viewを閉じる
+        self.dismiss(animated: true)
     }
     
-    private var toolbar: UIToolbar!
-    
+    // Viewが生成された最初の一回だけ走るライフサイクルメソッド
     override func viewDidLoad() {
         super.viewDidLoad()
         self.nameTextField.becomeFirstResponder()
@@ -65,15 +48,18 @@ class TwitterViewController: UIViewController, UITextViewDelegate, UITextFieldDe
         postOutletAddButton.layer.cornerRadius = 10
         postOutletAddButton.layer.borderWidth = 0.5
         
+        print(delegate ?? "nil")
         
     }
-    override func viewDidDisappear(_ animated: Bool) {
-        super.viewDidDisappear(animated)
+    
+    // 入力データをRealmに保存する
+    func saveData(name: String, mainText: String) {
+        let realm = try! Realm()
+        try! realm.write {
+            let tweetData = TweetCellModel()
+            tweetData.name = name
+            tweetData.mainText = mainText
+            realm.add(tweetData)
+        }
     }
-    
-    
 }
-
-
-
-
