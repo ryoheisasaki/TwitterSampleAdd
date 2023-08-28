@@ -10,7 +10,24 @@ import UIKit
 import RealmSwift
 
 
-class HomeViewController: UIViewController {
+class HomeViewController: UIViewController, TwitterViewControllerDelegate {
+    
+    // TwitterViewControllerDelegateのメソッドを実装
+    func didPostTweet(_ tweet: TweetCellModel) {
+        // ツイートデータを追加
+        tweetDataList.insert(tweet, at: 0)
+        
+        // テーブルビューを更新
+        tableView.reloadData()
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+            if segue.identifier == "YourSegueIdentifierHere",
+               let twitterViewController = segue.destination as? TwitterViewController {
+                // デリゲートを設定
+                twitterViewController.delegate = self
+            }
+        }
     
     
     @IBOutlet weak var addButton: UIButton!

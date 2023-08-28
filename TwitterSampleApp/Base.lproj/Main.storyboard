@@ -31,7 +31,7 @@
                                 <connections>
                                     <action selector="addButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="ibQ-by-LOD"/>
                                     <action selector="addButton:" destination="8yA-qS-A32" eventType="touchUpInside" id="itS-tN-P0N"/>
-                                    <segue destination="lfJ-eK-zxQ" kind="show" id="Qc7-uF-Vdz"/>
+                                    <segue destination="lfJ-eK-zxQ" kind="show" identifier="YourSegueIdentifierHere" id="Qc7-uF-Vdz"/>
                                 </connections>
                             </button>
                         </subviews>

@@ -9,9 +9,17 @@ import Foundation
 import UIKit
 import RealmSwift
 
+// TwitterViewControllerDelegate プロトコルの定義
+protocol TwitterViewControllerDelegate: AnyObject {
+    func didPostTweet(_ tweet: TweetCellModel)
+}
+
+
 class TwitterViewController: UIViewController, UITextViewDelegate, UITextFieldDelegate {
     let tweetData = TweetCellModel()
     
+    // TwitterViewControllerDelegate プロトコルへの準拠を宣言
+    weak var delegate: TwitterViewControllerDelegate?
     
     @IBOutlet weak var nameTextField: UITextField!
     @IBOutlet weak var mainTextView:
@@ -39,9 +47,11 @@ class TwitterViewController: UIViewController, UITextViewDelegate, UITextFieldDe
         // 値を保存する
         saveData(name: name, mainText: mainText)
         
-        // ビューコントローラーを閉じる
-        self.navigationController?.popViewController(animated: true)
+        // デリゲートメソッドを呼び出す
+        delegate?.didPostTweet(tweetData)
         
+        // ビューコントローラーを閉じる
+        self.dismiss(animated: true, completion: nil)
         
         
     }
