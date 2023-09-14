@@ -12,29 +12,40 @@ import RealmSwift
 
 class HomeViewController: UIViewController, TwitterViewControllerDelegate {
     
+    var tweetDataList: [TweetCellModel] = []
+    
+    //遷移先に渡したい値を格納する変数
+    var editData = TweetCellModel()
+    
     // TwitterViewControllerDelegateのメソッドを実装
     func didPostTweet(_ tweet: TweetCellModel) {
         // ツイートデータを追加
-        tweetDataList.insert(tweet, at: 0)
+        let realm = try! Realm()
+        let result = realm.objects(TweetCellModel.self)
+        tweetDataList = Array(result)
+        
         
         // テーブルビューを更新
         tableView.reloadData()
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-            if segue.identifier == "YourSegueIdentifierHere",
-               let twitterViewController = segue.destination as? TwitterViewController {
-                // デリゲートを設定
-                twitterViewController.delegate = self
-            }
+        if segue.identifier == "YourSegueIdentifierHere",
+           let twitterViewController = segue.destination as? TwitterViewController {
+            // デリゲートを設定
+            twitterViewController.delegate = self
+            twitterViewController.tweetData = editData
         }
+        editData = TweetCellModel()
+    }
+    
+    
     
     
     @IBOutlet weak var addButton: UIButton!
     @IBOutlet weak var tableView: UITableView!
     @IBAction func addButton(_ sender: UIButton) {}
     
-    var tweetDataList: [TweetCellModel] = []
     
     //ライフメソッド　起動時に実行される　viewDidLoad ロードされる
     override func viewDidLoad() {
@@ -76,6 +87,26 @@ class HomeViewController: UIViewController, TwitterViewControllerDelegate {
     
 }
 
+extension HomeViewController: TableViewCellDelegate {
+    func relordTweetData() {
+        let realm = try! Realm()
+        let result = realm.objects(TweetCellModel.self)
+        tweetDataList = Array(result)
+        
+        //テーブルビュー更新
+        tableView.reloadData()
+    }
+    
+    
+    
+    func segue(tweetData: TweetCellModel) {
+        editData = tweetData
+        
+        //別画面に遷移
+        performSegue(withIdentifier: "YourSegueIdentifierHere", sender: nil)
+    }
+}
+
 extension HomeViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return tweetDataList.count
@@ -83,7 +114,9 @@ extension HomeViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "TableViewCell", for: indexPath) as! TableViewCell
+        cell.delegate = self
         let tweetData = tweetDataList[indexPath.row]
+        cell.tweetData = tweetData
         cell.setCell(tweetCell: tweetData)
         return cell
     }

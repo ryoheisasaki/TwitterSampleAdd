@@ -37,24 +37,49 @@
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9WX-FB-zcL">
+                        <rect key="frame" x="167" y="40" width="58.666666666666657" height="24"/>
+                        <state key="normal" title="Button"/>
+                        <buttonConfiguration key="configuration" style="plain" title="編集"/>
+                        <connections>
+                            <action selector="cellEdit:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="tkp-tb-dva"/>
+                        </connections>
+                    </button>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bCd-wa-0Rf">
+                        <rect key="frame" x="242.66666666666666" y="40" width="58.666666666666657" height="24"/>
+                        <state key="normal" title="Button"/>
+                        <buttonConfiguration key="configuration" style="plain" title="削除"/>
+                        <connections>
+                            <action selector="cellDeleate:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="JIN-hY-fMf"/>
+                        </connections>
+                    </button>
                 </subviews>
                 <constraints>
+                    <constraint firstAttribute="trailing" secondItem="bCd-wa-0Rf" secondAttribute="trailing" constant="18.670000000000002" id="1Us-4a-RY3"/>
+                    <constraint firstItem="9WX-FB-zcL" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="40" id="9YW-bd-5JS"/>
                     <constraint firstAttribute="trailing" secondItem="Yi4-jM-Jsf" secondAttribute="trailing" constant="217" id="AHt-HM-ZN4"/>
                     <constraint firstItem="Yi4-jM-Jsf" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="16" id="G8J-eC-Zqn"/>
+                    <constraint firstAttribute="bottom" secondItem="9WX-FB-zcL" secondAttribute="bottom" constant="40" id="JF0-4b-9Fz"/>
                     <constraint firstItem="ZbU-ti-6Z1" firstAttribute="top" secondItem="Yi4-jM-Jsf" secondAttribute="bottom" constant="8" id="Jnf-Oa-ve6"/>
                     <constraint firstAttribute="trailing" secondItem="ZbU-ti-6Z1" secondAttribute="trailing" constant="16" id="LLh-K5-EI7"/>
+                    <constraint firstAttribute="bottom" secondItem="bCd-wa-0Rf" secondAttribute="bottom" constant="40" id="LR7-C5-Xtn"/>
                     <constraint firstAttribute="bottom" secondItem="ZbU-ti-6Z1" secondAttribute="bottom" constant="11" id="NaY-8E-KWT"/>
                     <constraint firstItem="ZbU-ti-6Z1" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="16" id="ODj-bw-0Nk"/>
+                    <constraint firstItem="bCd-wa-0Rf" firstAttribute="leading" secondItem="9WX-FB-zcL" secondAttribute="trailing" constant="17" id="S5g-WX-X9U"/>
                     <constraint firstItem="Yi4-jM-Jsf" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="16" id="VwO-JH-BAQ"/>
                     <constraint firstItem="Yi4-jM-Jsf" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="16" id="asO-K0-xs0"/>
                     <constraint firstAttribute="trailing" secondItem="ZbU-ti-6Z1" secondAttribute="trailing" constant="16" id="giW-sa-OBD"/>
+                    <constraint firstItem="bCd-wa-0Rf" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="40" id="rOl-Ql-LJN"/>
                     <constraint firstItem="ZbU-ti-6Z1" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="16" id="tss-7P-kvz"/>
+                    <constraint firstItem="bCd-wa-0Rf" firstAttribute="leading" secondItem="9WX-FB-zcL" secondAttribute="trailing" constant="17" id="xE1-cm-Z6Q"/>
                     <constraint firstAttribute="bottom" secondItem="ZbU-ti-6Z1" secondAttribute="bottom" constant="11" id="xdo-49-5od"/>
                     <constraint firstItem="Yi4-jM-Jsf" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="16" id="y0x-Au-Ubd"/>
                 </constraints>
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
             <connections>
+                <outlet property="deleateButton" destination="bCd-wa-0Rf" id="4C5-Zo-Ka9"/>
+                <outlet property="editButton" destination="9WX-FB-zcL" id="8aQ-hy-9K4"/>
                 <outlet property="mainText" destination="ZbU-ti-6Z1" id="01N-Vf-qFd"/>
                 <outlet property="name" destination="Yi4-jM-Jsf" id="yCN-6v-DIf"/>
             </connections>

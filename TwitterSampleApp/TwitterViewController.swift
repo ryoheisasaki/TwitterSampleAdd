@@ -16,14 +16,22 @@ protocol TwitterViewControllerDelegate: AnyObject {
 
 
 class TwitterViewController: UIViewController, UITextViewDelegate, UITextFieldDelegate {
-    let tweetData = TweetCellModel()
     
     // TwitterViewControllerDelegate プロトコルへの準拠を宣言
     weak var delegate: TwitterViewControllerDelegate?
     
+    var tweetData = TweetCellModel()
+    
+    
+    
+    
+    
     @IBOutlet weak var nameTextField: UITextField!
     @IBOutlet weak var mainTextView:
     UITextView!
+    
+    //文字数制限
+    let maxCharacterCount = 43
     
     @IBOutlet weak var cancelButton: UIButton!
     
@@ -36,8 +44,7 @@ class TwitterViewController: UIViewController, UITextViewDelegate, UITextFieldDe
     //投稿ボタン
     @IBAction func postAddButton(_ sender: UIButton) {
         
-        tweetData.name = nameTextField.text ?? ""
-        tweetData.mainText = mainTextView.text ?? ""
+        
         
         
         //テキストフィールドとテキストビューの値を取得する
@@ -58,10 +65,10 @@ class TwitterViewController: UIViewController, UITextViewDelegate, UITextFieldDe
     func saveData(name: String, mainText: String) {
         let realm = try! Realm()
         try! realm.write {
+            let tweetData = tweetData
             tweetData.name = name
             tweetData.mainText = mainText
             realm.add(tweetData)
-            print("😃\(tweetData)")
         }
     }
     
@@ -71,18 +78,30 @@ class TwitterViewController: UIViewController, UITextViewDelegate, UITextFieldDe
         super.viewDidLoad()
         self.nameTextField.becomeFirstResponder()
         self.mainTextView.becomeFirstResponder()
+        self.nameTextField.text = tweetData.name
+        self.mainTextView.text = tweetData.mainText
         postOutletAddButton.backgroundColor = UIColor.yellow
         postOutletAddButton.layer.cornerRadius = 10
         postOutletAddButton.layer.borderWidth = 0.5
         
+        print(delegate ?? "nil")
         
+        mainTextView.delegate = self
+
     }
-    override func viewDidDisappear(_ animated: Bool) {
-        super.viewDidDisappear(animated)
-    }
+    //文字数が43文字を超えないようにする。文字数制限
+       func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
+           //入力された変更を行った場合の文字数を計算。
+           let newCharacterCount = textView.text.count - range.length + text.count
+
+           //43文字以下でtrueを返し、43文字超でfalseを返す
+           return (newCharacterCount <= maxCharacterCount)
+       }
+
+   }
     
     
-}
+
 
 
 
