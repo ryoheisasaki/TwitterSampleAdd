@@ -14,6 +14,9 @@ class HomeViewController: UIViewController {
     
     var tweetDataList: [TweetCellModel] = []
     
+    // 遷移先に渡したい値を格納する変数を用意する
+    var editData = TweetCellModel()
+    
     @IBOutlet weak var addButton: UIButton!
     @IBOutlet weak var tableView: UITableView!
     @IBAction func addButton(_ sender: UIButton) {}
@@ -41,7 +44,9 @@ class HomeViewController: UIViewController {
         if segue.identifier == "toNext" {
             let nextView = segue.destination as! TwitterViewController
             nextView.delegate = self
+            nextView.tweetData = editData
         }
+        editData = TweetCellModel()
     }
     
     //投稿ボタンを円形にする
@@ -56,7 +61,6 @@ class HomeViewController: UIViewController {
         
         //テーブルビュー更新
         tableView.reloadData()
-        
     }
 }
 
@@ -67,6 +71,7 @@ extension HomeViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "TableViewCell", for: indexPath) as! TableViewCell
+        cell.delegate = self
         let tweetData = tweetDataList[indexPath.row]
         cell.setCell(tweetCell: tweetData)
         return cell
@@ -98,5 +103,13 @@ extension String {
 extension HomeViewController: TwitterViewControllerDelegate {
     func didPostTweet() {
         setTweetData()
+    }
+}
+
+extension HomeViewController: TableViewCellDelegate {
+    func segue(tweetData: TweetCellModel) {
+        editData = tweetData
+        // 別の画面に遷移
+        performSegue(withIdentifier: "toNext", sender: nil)
     }
 }

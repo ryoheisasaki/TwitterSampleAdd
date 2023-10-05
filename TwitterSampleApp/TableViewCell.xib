@@ -37,9 +37,22 @@
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fZh-jA-vaE">
+                        <rect key="frame" x="139" y="9" width="75" height="35"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="35" id="EkH-mr-e5c"/>
+                            <constraint firstAttribute="width" constant="75" id="gK9-9w-XAj"/>
+                        </constraints>
+                        <state key="normal" title="Button"/>
+                        <buttonConfiguration key="configuration" style="plain" title="編集"/>
+                        <connections>
+                            <action selector="cellEdit:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="G4f-rS-hSv"/>
+                        </connections>
+                    </button>
                 </subviews>
                 <constraints>
                     <constraint firstAttribute="trailing" secondItem="Yi4-jM-Jsf" secondAttribute="trailing" constant="217" id="AHt-HM-ZN4"/>
+                    <constraint firstItem="fZh-jA-vaE" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="9" id="CjQ-2H-3fI"/>
                     <constraint firstItem="Yi4-jM-Jsf" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="16" id="G8J-eC-Zqn"/>
                     <constraint firstItem="ZbU-ti-6Z1" firstAttribute="top" secondItem="Yi4-jM-Jsf" secondAttribute="bottom" constant="8" id="Jnf-Oa-ve6"/>
                     <constraint firstAttribute="trailing" secondItem="ZbU-ti-6Z1" secondAttribute="trailing" constant="16" id="LLh-K5-EI7"/>
@@ -49,12 +62,14 @@
                     <constraint firstItem="Yi4-jM-Jsf" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="16" id="asO-K0-xs0"/>
                     <constraint firstAttribute="trailing" secondItem="ZbU-ti-6Z1" secondAttribute="trailing" constant="16" id="giW-sa-OBD"/>
                     <constraint firstItem="ZbU-ti-6Z1" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="16" id="tss-7P-kvz"/>
+                    <constraint firstItem="fZh-jA-vaE" firstAttribute="leading" secondItem="Yi4-jM-Jsf" secondAttribute="trailing" constant="36" id="xdU-Ef-QFd"/>
                     <constraint firstAttribute="bottom" secondItem="ZbU-ti-6Z1" secondAttribute="bottom" constant="11" id="xdo-49-5od"/>
                     <constraint firstItem="Yi4-jM-Jsf" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="16" id="y0x-Au-Ubd"/>
                 </constraints>
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
             <connections>
+                <outlet property="editButton" destination="fZh-jA-vaE" id="ot2-wb-PaI"/>
                 <outlet property="mainText" destination="ZbU-ti-6Z1" id="01N-Vf-qFd"/>
                 <outlet property="name" destination="Yi4-jM-Jsf" id="yCN-6v-DIf"/>
             </connections>

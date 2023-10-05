@@ -11,7 +11,9 @@ import RealmSwift
 
 class TwitterViewController: UIViewController, UITextViewDelegate, UITextFieldDelegate {
     
-    weak var delegate: TwitterViewControllerDelegate? = nil
+    weak var delegate: TwitterViewControllerDelegate?
+    
+    var tweetData = TweetCellModel()
     
     @IBOutlet weak var nameTextField: UITextField!
     @IBOutlet weak var mainTextView: UITextView!
@@ -44,6 +46,8 @@ class TwitterViewController: UIViewController, UITextViewDelegate, UITextFieldDe
         super.viewDidLoad()
         self.nameTextField.becomeFirstResponder()
         self.mainTextView.becomeFirstResponder()
+        self.nameTextField.text = tweetData.name
+        self.mainTextView.text = tweetData.mainText
         postOutletAddButton.backgroundColor = UIColor.yellow
         postOutletAddButton.layer.cornerRadius = 10
         postOutletAddButton.layer.borderWidth = 0.5
@@ -56,7 +60,7 @@ class TwitterViewController: UIViewController, UITextViewDelegate, UITextFieldDe
     func saveData(name: String, mainText: String) {
         let realm = try! Realm()
         try! realm.write {
-            let tweetData = TweetCellModel()
+            let tweetData = tweetData
             tweetData.name = name
             tweetData.mainText = mainText
             realm.add(tweetData)
